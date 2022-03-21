@@ -6,16 +6,8 @@
 
 <h1 class="text-center mt-5">Oko bere</h1>
 
-@if(!(Model.Count > 21 || Model.Count == 21)){
-    <a class="btn btn-primary m-auto" asp-page="Index" asp-page-handler="Draw" asp-route-count="@Model.Count">Draw</a>
-}
+<a class="btn btn-primary m-auto" asp-page="Index" asp-page-handler="Draw" asp-route-count="@Model.Count">Draw</a>
+<a class="btn btn-primary" asp-page="Index" asp-page-handler="Reset">Reset</a>
+<a class="btn btn-primary" asp-page="Index" asp-page-handler="EndEarly">End Early</a>
 <p class="text-center mt-3">@Model.LastCard</p>
 <p class="text-center mt-2">@Model.Count</p>
-
-@foreach (var c in Model.Cards) {
-    <p>@c</p>
-}
-
-<div class="text-center">
-@Model.LastCard
-</div>

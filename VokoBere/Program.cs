@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<IRandomizer, Randomizer>();
 builder.Services.AddSingleton<ICardDealerService, CardDealerService>();
+builder.Services.AddSingleton<GameManagerService>();
 
 var app = builder.Build();
 

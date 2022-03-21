@@ -10,39 +10,61 @@ namespace VokoBere.Pages
 
         private readonly ICardDealerService _Karty;
 
-        public int Count { get; set; }
+        private readonly GameManagerService _gameManager;
+
         [TempData]
         public string End { get; set; }
-        public CardValue LastCard { get; set; } = CardValue.nothing;
+
+        public int Count { get; set; }
+        public CardValue LastCard { get; set; }
         public List<CardValue> Cards { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, ICardDealerService cardDealerService)
+
+        public IndexModel(ILogger<IndexModel> logger, ICardDealerService cardDealerService, GameManagerService gameManager)
         {
             _logger = logger;
             _Karty = cardDealerService;
+            _gameManager = gameManager;
             Cards = _Karty.GetAllCards();
         }
 
         public void OnGet()
         {
-
+            List<CardValue> starting_hand = _gameManager.StartGame();
+            LastCard = _gameManager.LastCard;
+            Count = _gameManager.Count;
         }
 
         public IActionResult OnGetDraw(int count)
         {
-            LastCard = _Karty.Fetch();
-            Count = count + (int)LastCard;
-            if(Count == 21)
+            _gameManager.Draw(count);
+            LastCard = _gameManager.LastCard;
+            Count = _gameManager.Count;
+            if(Count > 21 || Count == 21)
             {
-                End = "Vyhrál si";
-                return RedirectToPage("Privacy");
-            }
-            else if(Count > 21)
-            {
-                End = "Prohrál si";
+                End = _gameManager.EndEarly();
                 return RedirectToPage("Privacy");
             }
             return Page();
         }
+
+        public IActionResult OnGetEndEarly(int count)
+        {
+            End = _gameManager.EndEarly();
+            return RedirectToPage("Privacy");
+        }
+
+        public void OnGetReset()
+        {
+            Count = 0;
+            _Karty.ShuffleDeck();
+            Cards = _Karty.GetAllCards();
+            _gameManager.Count = 0;
+            _gameManager._DrawnCards.Clear();
+            _gameManager.StartGame();
+            LastCard = _gameManager.LastCard;
+            Count = _gameManager.Count;
+        }
+
     }
 }
