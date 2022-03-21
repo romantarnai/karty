@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // ???
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton<IRandomizer, Randomizer>();
+builder.Services.AddSingleton<ICardDealerService, CardDealerService>();
 
 var app = builder.Build();
 

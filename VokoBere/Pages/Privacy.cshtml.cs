@@ -7,6 +7,8 @@ namespace VokoBere.Pages
     {
         private readonly ILogger<PrivacyModel> _logger;
 
+        [TempData]
+        public string End { get; set; }
         public PrivacyModel(ILogger<PrivacyModel> logger)
         {
             _logger = logger;

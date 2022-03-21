@@ -9,6 +9,7 @@
         Jack = 1,
         Queen = 1,
         King = 2,
-        Ace = 11
+        Ace = 11,
+        nothing = 0
     }
 }

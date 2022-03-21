@@ -1,4 +1,6 @@
-﻿namespace VokoBere.Services
+﻿using Microsoft.Extensions.Options;
+
+namespace VokoBere.Services
 {
     public class CardDealerService: ICardDealerService
     {
@@ -16,9 +18,10 @@
         private IRandomizer _random;
         private int _position = 0;
 
-        public CardDealerService()
+        public CardDealerService(IRandomizer random)
         {
             // ???
+            _random = random;
             ShuffleDeck();
         }
 
