@@ -1,0 +1,13 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@foreach (var c in Model.Cards) {
+    <p>@c</p>
+}
+
+<div class="text-center">
+@Model.LastCard
+</div>
